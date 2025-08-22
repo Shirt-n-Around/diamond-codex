@@ -4,75 +4,173 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Diamond Codex</title>
+  <meta name="color-scheme" content="dark light">
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <div>
-        <h1 id="app-title">The Diamond Codex</h1>
-        <p id="app-tagline" class="tagline">Strength Through Self-Awareness</p>
+      <div class="brand">
+        <svg class="diamond" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3l3.5 4.5L12 12 8.5 7.5 12 3zm0 9l7-7 3 4-10 12L2 9l3-4 7 7z"/>
+        </svg>
+        <div class="brand-text">
+          <h1 id="app-title">The Diamond Codex</h1>
+          <p id="app-tagline" class="tagline">Strength Through Self-Awareness</p>
+        </div>
       </div>
-      <nav class="nav">
-        <button class="tab-btn active" data-tab="home">Home</button>
-        <button class="tab-btn" data-tab="quickRef">Quick Reference</button>
-        <button class="tab-btn" data-tab="seniorMentor">Senior Mentor Notes</button>
-         <button class="tab-btn" data-tab="actionPlan">Action Plan</button>
-        <button class="tab-btn" data-tab="coachingGrow">Coaching • GROW</button>
+      <nav class="nav" role="tablist" aria-label="Primary">
+        <button class="tab-btn active" data-tab="home" role="tab" aria-selected="true">Home</button>
+        <button class="tab-btn" data-tab="leaderProfile" role="tab" aria-selected="false">Leader Profile</button>
+        <button class="tab-btn" data-tab="quickRef" role="tab" aria-selected="false">Quick Reference</button>
+        <button class="tab-btn" data-tab="seniorMentor" role="tab" aria-selected="false">Senior Mentor Notes</button>
+        <button class="tab-btn" data-tab="actionPlan" role="tab" aria-selected="false">Action Plan</button>
+        <button class="tab-btn" data-tab="coachingGrow" role="tab" aria-selected="false">Coaching • GROW</button>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section id="home" class="tab-pane active">
-      <div class="card">
-        <h2>Welcome</h2>
-        <p>This is your fast, no-friction reference hub designed for First Sergeants. Keep your lessons learned, mentor quotes, and coaching prompts ready at hand—so you keep earning the diamond and never stagnate.</p>
-        <div class="actions">
-          <button id="import-json" class="btn">Import Config/Notes JSON</button>
-          <button id="export-json" class="btn secondary">Export Current Data</button>
-        </div>
-        <p class="muted">Tip: Use <strong>Export</strong> to back up your content. Your entries are stored locally in your browser (no server required).</p>
+    <section id="home" class="tab-pane active" role="tabpanel">
+      <div class="toolbar">
+        <button id="import-json" class="btn">Import JSON</button>
+        <button id="export-json" class="btn secondary">Export JSON</button>
+        <button id="print-site" class="btn outline">Print Codex</button>
       </div>
-      <div class="grid">
+
+      <div class="card intro">
+        <h2>Welcome</h2>
+        <p>This is your fast, no‑friction reference hub designed for First Sergeants. Keep your lessons learned, mentor quotes, coaching prompts, and now a structured Leader Profile—so you keep earning the diamond and never stagnate.</p>
+        <p class="muted">Tip: Your entries are stored locally in your browser (no server required). Use <strong>Export</strong> to back up your content.</p>
+      </div>
+
+      <div class="grid grid-2">
         <div class="card">
           <h3>Fast Edit: Quick Reference</h3>
-          <textarea id="quickRef-editor" placeholder="Paste or type your quick-reference bullets here..."></textarea>
+          <textarea id="quickRef-editor" placeholder="Paste or type your quick‑reference bullets here..."></textarea>
+          <div class="editor-meta"><span id="quickRef-count"></span></div>
           <button class="btn" data-save="quickRef">Save</button>
         </div>
         <div class="card">
           <h3>Fast Edit: Senior Mentor Notes</h3>
           <textarea id="seniorMentor-editor" placeholder="Paste Senior Mentor quotes/takeaways..."></textarea>
+          <div class="editor-meta"><span id="seniorMentor-count"></span></div>
           <button class="btn" data-save="seniorMentor">Save</button>
         </div>
         <div class="card">
           <h3>Fast Edit: Action Plan</h3>
           <textarea id="actionPlan-editor" placeholder="Paste or type your Action Plan for Growth here..."></textarea>
+          <div class="editor-meta"><span id="actionPlan-count"></span></div>
           <button class="btn" data-save="actionPlan">Save</button>
         </div>
         <div class="card">
           <h3>Fast Edit: Coaching • GROW</h3>
           <textarea id="coachingGrow-editor" placeholder="Goals, Reality, Options, Will..."></textarea>
+          <div class="editor-meta"><span id="coachingGrow-count"></span></div>
           <button class="btn" data-save="coachingGrow">Save</button>
         </div>
       </div>
     </section>
 
-    <section id="quickRef" class="tab-pane">
+    <section id="leaderProfile" class="tab-pane" role="tabpanel">
+      <div class="card">
+        <h2>Leader Profile</h2>
+        <p class="muted">Capture your strengths, weaknesses, values, triggers, goals, and development actions. Use sliders to rate core competencies. This stays private in your browser unless you export it.</p>
+        <div class="grid grid-2">
+          <div class="stack">
+            <label>Strengths</label>
+            <textarea id="lp-strengths" placeholder="e.g., Humility, Courage, Coaching mindset..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Weaknesses</label>
+            <textarea id="lp-weaknesses" placeholder="e.g., Time management, Overusing charisma, Fix‑it reflex..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Values</label>
+            <textarea id="lp-values" placeholder="e.g., Hard work, Compassion with boundaries, Accountability..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Triggers</label>
+            <textarea id="lp-triggers" placeholder="e.g., Disrespect, unclear standards, last‑minute churn..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Goals (Short‑Term)</label>
+            <textarea id="lp-goals-short" placeholder="e.g., Run weekly listening block; 1 GROW convo/week..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Goals (Long‑Term)</label>
+            <textarea id="lp-goals-long" placeholder="e.g., Culture of psychological safety; decentralized execution muscle..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Development Actions</label>
+            <textarea id="lp-dev-actions" placeholder="e.g., Practice SBI/I; debrief cadence; mentorship lattice..."></textarea>
+          </div>
+          <div class="stack">
+            <label>Accountability / Check‑ins</label>
+            <textarea id="lp-checkins" placeholder="e.g., Monthly with CCC; bi‑weekly with NCOICs; personal reflection Friday 1500..."></textarea>
+          </div>
+        </div>
+
+        <div class="card inner">
+          <h3>Competency Ratings (0–10)</h3>
+          <div class="ratings">
+            <div class="rating">
+              <label for="cr-communication">Communication</label>
+              <input type="range" min="0" max="10" id="cr-communication"><span id="cr-communication-val">5</span>
+            </div>
+            <div class="rating">
+              <label for="cr-accountability">Accountability</label>
+              <input type="range" min="0" max="10" id="cr-accountability"><span id="cr-accountability-val">5</span>
+            </div>
+            <div class="rating">
+              <label for="cr-empathy">Empathy</label>
+              <input type="range" min="0" max="10" id="cr-empathy"><span id="cr-empathy-val">5</span>
+            </div>
+            <div class="rating">
+              <label for="cr-decisiveness">Decisiveness</label>
+              <input type="range" min="0" max="10" id="cr-decisiveness"><span id="cr-decisiveness-val">5</span>
+            </div>
+            <div class="rating">
+              <label for="cr-time">Time Management</label>
+              <input type="range" min="0" max="10" id="cr-time"><span id="cr-time-val">5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="lp-save">Save Profile</button>
+          <button class="btn outline" id="lp-copy-summary">Copy Summary</button>
+        </div>
+
+        <div class="card inner">
+          <h3>Profile Summary</h3>
+          <div id="lp-summary" class="content"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quickRef" class="tab-pane" role="tabpanel">
       <div class="card">
         <h2>Quick Reference</h2>
         <div id="quickRef-content" class="content"></div>
       </div>
     </section>
 
-    <section id="seniorMentor" class="tab-pane">
+    <section id="seniorMentor" class="tab-pane" role="tabpanel">
       <div class="card">
         <h2>Senior Mentor Notes</h2>
         <div id="seniorMentor-content" class="content"></div>
       </div>
     </section>
 
-    <section id="coachingGrow" class="tab-pane">
+    <section id="actionPlan" class="tab-pane" role="tabpanel">
+      <div class="card">
+        <h2>Action Plan for Growth</h2>
+        <div id="actionPlan-content" class="content"></div>
+      </div>
+    </section>
+
+    <section id="coachingGrow" class="tab-pane" role="tabpanel">
       <div class="card">
         <h2>Coaching • GROW</h2>
         <div id="coachingGrow-content" class="content"></div>
@@ -93,13 +191,15 @@
     <form method="dialog" class="dialog-card">
       <h3>Import Config/Notes JSON</h3>
       <p class="muted">Paste JSON that includes <code>app</code>, <code>footer</code>, and optional content fields. Existing local content will be overwritten for matching keys.</p>
-      <textarea id="import-textarea" placeholder='{"app":{"title":"The Diamond Codex","tagline":"Strength Through Self-Awareness"},"footer":{"acknowledgment":"..."},"quickRef":"- Bullet 1\n- Bullet 2"}'></textarea>
+      <textarea id="import-textarea" placeholder='{"app":{"title":"The Diamond Codex","tagline":"Strength Through Self-Awareness"},"footer":{"acknowledgment":"..."},"leaderProfile":{...},"quickRef":"- Bullet 1\n- Bullet 2"}'></textarea>
       <div class="dialog-actions">
         <button value="cancel" class="btn secondary">Cancel</button>
         <button id="import-apply" value="default" class="btn">Import</button>
       </div>
     </form>
   </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>
