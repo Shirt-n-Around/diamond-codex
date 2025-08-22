@@ -23,6 +23,8 @@ function loadState() {
   // preload editors
   $("#quickRef-editor").value = localStorage.getItem(KEYS.quickRef) ?? "";
   $("#seniorMentor-editor").value = localStorage.getItem(KEYS.seniorMentor) ?? "";
+  $("#actionPlan-content").textContent = get(KEYS.actionPlan, "Add your Action Plan in Home > Fast Edit.");
+$("#actionPlan-editor").value = localStorage.getItem(KEYS.actionPlan) ?? "";
   $("#coachingGrow-editor").value = localStorage.getItem(KEYS.coachingGrow) ?? "";
 }
 
@@ -51,6 +53,9 @@ function setupEditors() {
   $("[data-save='seniorMentor']").addEventListener("click", () => {
     saveField(KEYS.seniorMentor, $("#seniorMentor-editor").value);
   });
+  $("[data-save='actionPlan']").addEventListener("click", () => {
+  saveField(KEYS.actionPlan, $("#actionPlan-editor").value);
+});
   $("[data-save='coachingGrow']").addEventListener("click", () => {
     saveField(KEYS.coachingGrow, $("#coachingGrow-editor").value);
   });
@@ -75,6 +80,7 @@ function setupImportExport() {
       }
       if (typeof data.quickRef === "string") localStorage.setItem(KEYS.quickRef, data.quickRef);
       if (typeof data.seniorMentor === "string") localStorage.setItem(KEYS.seniorMentor, data.seniorMentor);
+      if (typeof data.actionPlan === "string") localStorage.setItem(KEYS.actionPlan, data.actionPlan);
       if (typeof data.coachingGrow === "string") localStorage.setItem(KEYS.coachingGrow, data.coachingGrow);
 
       loadState();
@@ -95,6 +101,7 @@ function setupImportExport() {
       },
       quickRef: localStorage.getItem(KEYS.quickRef) ?? "",
       seniorMentor: localStorage.getItem(KEYS.seniorMentor) ?? "",
+      actionPlan: localStorage.getItem(KEYS.actionPlan) ?? "",
       coachingGrow: localStorage.getItem(KEYS.coachingGrow) ?? ""
     };
     const blob = new Blob([JSON.stringify(out, null, 2)], {type: "application/json"});
