@@ -22,11 +22,16 @@
       <nav class="nav" role="tablist" aria-label="Primary">
         <button class="tab-btn active" data-tab="home" role="tab" aria-selected="true">Home</button>
         <button class="tab-btn" data-tab="leaderProfile" role="tab" aria-selected="false">Leader Profile</button>
+        <button class="tab-btn" data-tab="goals" role="tab" aria-selected="false">Goals</button>
         <button class="tab-btn" data-tab="quickRef" role="tab" aria-selected="false">Quick Reference</button>
         <button class="tab-btn" data-tab="seniorMentor" role="tab" aria-selected="false">Senior Mentor Notes</button>
         <button class="tab-btn" data-tab="actionPlan" role="tab" aria-selected="false">Action Plan</button>
         <button class="tab-btn" data-tab="coachingGrow" role="tab" aria-selected="false">Coaching • GROW</button>
       </nav>
+      <div class="header-actions">
+        <button id="btn-lock" class="icon-btn" title="Lock Codex" aria-label="Lock Codex">🔒</button>
+        <button id="btn-settings" class="icon-btn" title="Settings" aria-label="Settings">⚙️</button>
+      </div>
     </div>
   </header>
 
@@ -40,8 +45,8 @@
 
       <div class="card intro">
         <h2>Welcome</h2>
-        <p>This is your fast, no‑friction reference hub designed for First Sergeants. Keep your lessons learned, mentor quotes, coaching prompts, and now a structured Leader Profile—so you keep earning the diamond and never stagnate.</p>
-        <p class="muted">Tip: Your entries are stored locally in your browser (no server required). Use <strong>Export</strong> to back up your content.</p>
+        <p>This is your fast, no‑friction reference hub designed for First Sergeants. Keep your lessons learned, mentor quotes, coaching prompts, a structured Leader Profile, and a Goals tracker—so you keep earning the diamond and never stagnate.</p>
+        <p class="muted">Tip: Your entries are stored locally in your browser (no server). Use <strong>Export</strong> to back up your content.</p>
       </div>
 
       <div class="grid grid-2">
@@ -75,7 +80,7 @@
     <section id="leaderProfile" class="tab-pane" role="tabpanel">
       <div class="card">
         <h2>Leader Profile</h2>
-        <p class="muted">Capture your strengths, weaknesses, values, triggers, goals, and development actions. Use sliders to rate core competencies. This stays private in your browser unless you export it.</p>
+        <p class="muted">Capture your strengths, weaknesses, values, triggers, goals, and development actions. Rate your core competencies. Private unless you export.</p>
         <div class="grid grid-2">
           <div class="stack">
             <label>Strengths</label>
@@ -95,7 +100,7 @@
           </div>
           <div class="stack">
             <label>Goals (Short‑Term)</label>
-            <textarea id="lp-goals-short" placeholder="e.g., Run weekly listening block; 1 GROW convo/week..."></textarea>
+            <textarea id="lp-goals-short" placeholder="e.g., Weekly listening block; 1 GROW convo/week..."></textarea>
           </div>
           <div class="stack">
             <label>Goals (Long‑Term)</label>
@@ -140,12 +145,26 @@
         <div class="actions">
           <button class="btn" id="lp-save">Save Profile</button>
           <button class="btn outline" id="lp-copy-summary">Copy Summary</button>
+          <button class="btn secondary" id="lp-open-dossier">Open Dossier (Print)</button>
         </div>
 
         <div class="card inner">
           <h3>Profile Summary</h3>
           <div id="lp-summary" class="content"></div>
         </div>
+      </div>
+    </section>
+
+    <section id="goals" class="tab-pane" role="tabpanel">
+      <div class="card">
+        <h2>Goals Tracker</h2>
+        <div class="goal-form">
+          <input id="goal-title" placeholder="Goal title (e.g., Launch mentorship lattice)" />
+          <input id="goal-due" type="date" />
+          <input id="goal-pct" type="number" min="0" max="100" step="5" placeholder="% complete" />
+          <button class="btn" id="goal-add">Add Goal</button>
+        </div>
+        <div id="goals-list" class="goals"></div>
       </div>
     </section>
 
@@ -187,15 +206,44 @@
     </div>
   </footer>
 
+  <!-- Import -->
   <dialog id="import-dialog">
     <form method="dialog" class="dialog-card">
       <h3>Import Config/Notes JSON</h3>
       <p class="muted">Paste JSON that includes <code>app</code>, <code>footer</code>, and optional content fields. Existing local content will be overwritten for matching keys.</p>
-      <textarea id="import-textarea" placeholder='{"app":{"title":"The Diamond Codex","tagline":"Strength Through Self-Awareness"},"footer":{"acknowledgment":"..."},"leaderProfile":{...},"quickRef":"- Bullet 1\n- Bullet 2"}'></textarea>
+      <textarea id="import-textarea" placeholder='{"app":{"title":"The Diamond Codex","tagline":"Strength Through Self-Awareness"},"footer":{"acknowledgment":"..."},"leaderProfile":{...},"goals":[...],"quickRef":"- Bullet 1\n- Bullet 2"}'></textarea>
       <div class="dialog-actions">
         <button value="cancel" class="btn secondary">Cancel</button>
         <button id="import-apply" value="default" class="btn">Import</button>
       </div>
+    </form>
+  </dialog>
+
+  <!-- Settings / PIN -->
+  <dialog id="settings-dialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Settings</h3>
+      <p class="muted">Set or change a simple PIN to lock this Codex on this browser. (Basic privacy—do not rely for classified or sensitive info.)</p>
+      <label>New PIN</label>
+      <input id="pin-new" type="password" inputmode="numeric" pattern="[0-9]*" placeholder="4-8 digits"/>
+      <label>Confirm PIN</label>
+      <input id="pin-confirm" type="password" inputmode="numeric" pattern="[0-9]*" placeholder="Repeat PIN"/>
+      <div class="dialog-actions">
+        <button value="cancel" class="btn secondary">Cancel</button>
+        <button id="pin-save" value="default" class="btn">Save PIN</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Lock Screen -->
+  <dialog id="lock-dialog">
+    <form method="dialog" class="dialog-card lock-card">
+      <h3>Enter PIN to Unlock</h3>
+      <input id="pin-entry" type="password" inputmode="numeric" pattern="[0-9]*" placeholder="PIN"/>
+      <div class="dialog-actions">
+        <button id="pin-enter" value="default" class="btn">Unlock</button>
+      </div>
+      <p class="muted">Forgot your PIN? Clear this browser's site data to reset.</p>
     </form>
   </dialog>
 
