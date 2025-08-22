@@ -8,6 +8,7 @@ const KEYS = {
   footerAck: "dc_footer_ack",
   quickRef: "dc_quickRef",
   seniorMentor: "dc_seniorMentor",
+  actionPlan: "dc_actionPlan",
   coachingGrow: "dc_coachingGrow"
 };
 
