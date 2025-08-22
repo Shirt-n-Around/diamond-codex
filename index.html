@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Diamond Codex</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <h1 id="app-title">The Diamond Codex</h1>
+        <p id="app-tagline" class="tagline">Strength Through Self-Awareness</p>
+      </div>
+      <nav class="nav">
+        <button class="tab-btn active" data-tab="home">Home</button>
+        <button class="tab-btn" data-tab="quickRef">Quick Reference</button>
+        <button class="tab-btn" data-tab="seniorMentor">Senior Mentor Notes</button>
+        <button class="tab-btn" data-tab="coachingGrow">Coaching • GROW</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home" class="tab-pane active">
+      <div class="card">
+        <h2>Welcome</h2>
+        <p>This is your fast, no-friction reference hub designed for First Sergeants. Keep your lessons learned, mentor quotes, and coaching prompts ready at hand—so you keep earning the diamond and never stagnate.</p>
+        <div class="actions">
+          <button id="import-json" class="btn">Import Config/Notes JSON</button>
+          <button id="export-json" class="btn secondary">Export Current Data</button>
+        </div>
+        <p class="muted">Tip: Use <strong>Export</strong> to back up your content. Your entries are stored locally in your browser (no server required).</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Fast Edit: Quick Reference</h3>
+          <textarea id="quickRef-editor" placeholder="Paste or type your quick-reference bullets here..."></textarea>
+          <button class="btn" data-save="quickRef">Save</button>
+        </div>
+        <div class="card">
+          <h3>Fast Edit: Senior Mentor Notes</h3>
+          <textarea id="seniorMentor-editor" placeholder="Paste Senior Mentor quotes/takeaways..."></textarea>
+          <button class="btn" data-save="seniorMentor">Save</button>
+        </div>
+        <div class="card">
+          <h3>Fast Edit: Coaching • GROW</h3>
+          <textarea id="coachingGrow-editor" placeholder="Goals, Reality, Options, Will..."></textarea>
+          <button class="btn" data-save="coachingGrow">Save</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="quickRef" class="tab-pane">
+      <div class="card">
+        <h2>Quick Reference</h2>
+        <div id="quickRef-content" class="content"></div>
+      </div>
+    </section>
+
+    <section id="seniorMentor" class="tab-pane">
+      <div class="card">
+        <h2>Senior Mentor Notes</h2>
+        <div id="seniorMentor-content" class="content"></div>
+      </div>
+    </section>
+
+    <section id="coachingGrow" class="tab-pane">
+      <div class="card">
+        <h2>Coaching • GROW</h2>
+        <div id="coachingGrow-content" class="content"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <small id="footer-ack">
+        Inspired by the AFGSC Striker Leadership Course (SILC); created as a personal reference to help First Sergeants earn their diamond and never stagnate.
+      </small>
+      <small class="muted">Personal tool; not affiliated with or endorsed by AFGSC or SILC.</small>
+    </div>
+  </footer>
+
+  <dialog id="import-dialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Import Config/Notes JSON</h3>
+      <p class="muted">Paste JSON that includes <code>app</code>, <code>footer</code>, and optional content fields. Existing local content will be overwritten for matching keys.</p>
+      <textarea id="import-textarea" placeholder='{"app":{"title":"The Diamond Codex","tagline":"Strength Through Self-Awareness"},"footer":{"acknowledgment":"..."},"quickRef":"- Bullet 1\n- Bullet 2"}'></textarea>
+      <div class="dialog-actions">
+        <button value="cancel" class="btn secondary">Cancel</button>
+        <button id="import-apply" value="default" class="btn">Import</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "The Diamond Codex",
+    "tagline": "Strength Through Self-Awareness"
+  },
+  "footer": {
+    "acknowledgment": "Inspired by the AFGSC Striker Leadership Course (SILC); created as a personal reference to help First Sergeants earn their diamond and never stagnate."
+  },
+  "quickRef": "- Use SBI/I for feedback\n- Ask: \"What does support look like?\"\n- Speak last; debrief often; default to learning",
+  "seniorMentor": "Quotes and takeaways go here...",
+  "coachingGrow": "G: ...\nR: ...\nO: ...\nW: ..."
+}
